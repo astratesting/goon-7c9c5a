@@ -123,6 +123,39 @@ code, pre, .font-mono {
   animation: pulse-glow 3s ease-in-out infinite;
 }
 
+/* Slider */
+.slider-goon {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  background: var(--surface-light);
+  border-radius: 2px;
+  outline: none;
+}
+
+.slider-goon::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--indigo);
+  cursor: pointer;
+  border: 2px solid var(--surface);
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.4);
+}
+
+.slider-goon::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--indigo);
+  cursor: pointer;
+  border: 2px solid var(--surface);
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.4);
+}
+
 /* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 6px;
