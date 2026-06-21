@@ -4,34 +4,24 @@ import { useState } from "react";
 
 const faqs = [
   {
-    question: "What file formats do you accept?",
+    question: "What kind of products can I order?",
     answer:
-      "We accept STL, OBJ, 3MF, STEP, and SketchUp (.skp) files. Our slicer automatically handles format conversion and mesh repair if needed.",
+      "Custom 3D printed figurines, miniatures, cosplay props, and maker projects. Describe what you want and we'll create it.",
   },
   {
-    question: "How does pricing work?",
+    question: "Do I need to know 3D modeling?",
     answer:
-      "Pricing is based on material usage and print time. Upload a file or describe your project and we'll give you an instant quote. No hidden fees — what you see is what you pay.",
+      "Not at all. Just describe your idea in text and our AI handles the rest.",
   },
   {
-    question: "What materials are available?",
+    question: "How long does shipping take?",
     answer:
-      "We offer PLA, PLA+, PETG, ABS, TPU, and Nylon. Each material comes with tested print profiles for consistent, high-quality results. Pro and Workshop plans unlock specialty materials.",
+      "We're targeting 72-hour turnaround from design approval to delivery.",
   },
   {
-    question: "How long does printing take?",
+    question: "When will Goon launch?",
     answer:
-      "Most prints ship within 3–5 business days. Pro plan members get priority queue access with 3-day delivery, and Workshop members get next-day delivery on standard orders.",
-  },
-  {
-    question: "What if my print fails quality checks?",
-    answer:
-      "Every print is inspected before shipping. If it doesn't pass, we reprint it at no extra cost. We want you to be happy with the result.",
-  },
-  {
-    question: "Can I describe an idea instead of uploading a file?",
-    answer:
-      "Yes. Describe what you need in plain language and we'll help you get from concept to a printable model. We also accept hand-drawn sketches.",
+      "We're building now. Join the waitlist to be first in line when we open.",
   },
 ];
 
@@ -48,7 +38,7 @@ export default function FAQ() {
             Common <span className="text-gradient">questions</span>
           </h2>
           <p className="text-muted max-w-xl mx-auto">
-            Everything you need to know about getting started with Goon.
+            Everything you need to know about Goon.
           </p>
         </div>
 
