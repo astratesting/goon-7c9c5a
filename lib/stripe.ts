@@ -20,3 +20,63 @@ export function getStripeClient() {
   }
   return stripePromise;
 }
+
+export async function createCheckoutSession({
+  email,
+  planId,
+  planName,
+  monthlyPrice,
+  printLimit,
+  origin,
+}: {
+  email: string;
+  planId: string;
+  planName: string;
+  monthlyPrice: number;
+  printLimit: number | null;
+  origin: string;
+}) {
+  const stripe = getStripe();
+
+  const session = await stripe.checkout.sessions.create({
+    mode: "subscription",
+    payment_method_types: ["card"],
+    customer_email: email,
+    line_items: [
+      {
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: `Goon ${planName}`,
+            description: `${printLimit ? printLimit + " prints/mo" : "Unlimited prints"} — Cancel anytime`,
+          },
+          unit_amount: monthlyPrice,
+          recurring: { interval: "month" },
+        },
+        quantity: 1,
+      },
+    ],
+    success_url: `${origin}/survey?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${origin}/cancel`,
+    metadata: { planId, userEmail: email },
+  });
+
+  return session;
+}
+
+export async function createCustomerPortal({
+  customerId,
+  origin,
+}: {
+  customerId: string;
+  origin: string;
+}) {
+  const stripe = getStripe();
+
+  const session = await stripe.billingPortal.sessions.create({
+    customer: customerId,
+    return_url: `${origin}/dashboard/subscription`,
+  });
+
+  return session;
+}
