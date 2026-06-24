@@ -2,13 +2,14 @@
 
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   mockPrintJobs,
   mockDesigns,
   mockStats,
 } from "@/lib/demo-data";
 import PricingCalculator from "@/components/PricingCalculator";
+import { FREE_TIER_PRINT_LIMIT } from "@/lib/plans";
 
 /* ------------------------------------------------------------------ */
 /*  Empty state sample data                                            */
@@ -112,8 +113,18 @@ export default function DashboardPage() {
   const { data: session } = useSession();
   const [tourOpen, setTourOpen] = useState(false);
   const [tourStep, setTourStep] = useState(0);
+  const [subscribed, setSubscribed] = useState(true); // default true to avoid flash
+
+  useEffect(() => {
+    fetch("/api/stripe/check-subscription")
+      .then((r) => r.json())
+      .then((d) => setSubscribed(d.subscribed))
+      .catch(() => {});
+  }, []);
 
   const hasActivity = mockStats.totalPrints > 0;
+  const printsUsed = mockStats.totalPrints;
+  const hitFreeLimit = !subscribed && printsUsed >= FREE_TIER_PRINT_LIMIT;
 
   return (
     <div className="space-y-8">
@@ -149,6 +160,29 @@ export default function DashboardPage() {
           </Link>
         </div>
       </div>
+
+      {/* Free tier limit paywall */}
+      {hitFreeLimit && (
+        <div className="bg-gradient-to-r from-indigo/10 to-purple/10 border border-indigo/20 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <div className="w-10 h-10 rounded-xl bg-indigo/20 flex items-center justify-center shrink-0">
+            <svg className="w-5 h-5 text-indigo" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+          </div>
+          <div className="flex-1">
+            <h3 className="font-heading font-bold text-white">You&apos;ve used your free print</h3>
+            <p className="text-sm text-muted mt-0.5">
+              Free tier includes {FREE_TIER_PRINT_LIMIT} print per month. Upgrade to Starter ($9.99/mo) for 3 prints or Pro ($29.99/mo) for unlimited.
+            </p>
+          </div>
+          <Link
+            href="/pricing"
+            className="px-5 py-2.5 bg-indigo text-white rounded-xl text-sm font-semibold hover:bg-indigo/90 transition-colors shrink-0"
+          >
+            Upgrade Plan
+          </Link>
+        </div>
+      )}
 
       {/* ---- EMPTY STATE ---- */}
       {!hasActivity && (

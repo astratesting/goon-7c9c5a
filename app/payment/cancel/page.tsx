@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Compass from "@/components/Compass";
 
-export default function CancelPage() {
+export default function PaymentCancelPage() {
   return (
     <div className="min-h-screen bg-ink flex items-center justify-center px-6">
       <div className="relative max-w-lg w-full text-center">
