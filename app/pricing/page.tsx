@@ -1,51 +1,12 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Compass from "@/components/Compass";
-
-const FREE_FEATURES = [
-  "Basic 3D print ordering",
-  "3 prints per month",
-  "PLA material only",
-  "Standard 7-day turnaround",
-  "Community support",
-];
-
-const PRO_FEATURES = [
-  "Unlimited AI generation",
-  "Unlimited prints",
-  "Priority 48-hour turnaround",
-  "All materials (PLA, PETG, Resin, Nylon)",
-  "Priority support",
-  "Commercial license",
-];
+import PricingCard from "@/components/PricingCard";
+import { PLANS } from "@/lib/plans";
 
 export default function PricingPage() {
-  const [loading, setLoading] = useState(false);
-
-  async function handleCheckout() {
-    setLoading(true);
-    try {
-      const res = await fetch("/api/stripe/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ planId: "pro" }),
-      });
-      const data = await res.json();
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        alert(data.error || "Failed to start checkout");
-        setLoading(false);
-      }
-    } catch {
-      alert("Something went wrong. Please try again.");
-      setLoading(false);
-    }
-  }
-
   return (
     <div className="min-h-screen bg-ink text-white">
       <Navbar />
@@ -58,67 +19,15 @@ export default function PricingPage() {
           Choose your plan
         </h1>
         <p className="text-muted max-w-xl mx-auto">
-          Start free, then upgrade when you&apos;re ready for unlimited AI generation and priority printing.
+          From single prototypes to unlimited production runs — pick the plan that fits your workflow.
         </p>
       </section>
 
-      <section className="max-w-4xl mx-auto px-6 pb-24">
-        <div className="grid md:grid-cols-2 gap-8">
-          {/* Free Tier */}
-          <div className="bg-surface rounded-2xl border border-white/5 p-8 flex flex-col">
-            <h3 className="text-lg font-heading font-bold text-white mb-1">Free</h3>
-            <p className="text-sm text-muted mb-6">For hobbyists getting started</p>
-            <div className="mb-6">
-              <span className="text-4xl font-heading font-bold text-white">$0</span>
-              <span className="text-muted text-sm">/month</span>
-            </div>
-            <ul className="space-y-3 mb-8 flex-1">
-              {FREE_FEATURES.map((f) => (
-                <li key={f} className="flex items-start gap-2 text-sm text-gray-300">
-                  <svg className="w-4 h-4 text-cyan mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
-                  {f}
-                </li>
-              ))}
-            </ul>
-            <Link
-              href="/login"
-              className="block text-center py-3 rounded-xl border border-white/10 text-white font-semibold text-sm hover:bg-surface-light transition-colors"
-            >
-              Get Started
-            </Link>
-          </div>
-
-          {/* Pro Tier */}
-          <div className="bg-surface rounded-2xl border-2 border-indigo/40 p-8 flex flex-col relative">
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-indigo text-white text-xs font-bold">
-              Most Popular
-            </div>
-            <h3 className="text-lg font-heading font-bold text-white mb-1">Pro</h3>
-            <p className="text-sm text-muted mb-6">For creators who need unlimited prints</p>
-            <div className="mb-6">
-              <span className="text-4xl font-heading font-bold text-cyan">$29</span>
-              <span className="text-muted text-sm">/month</span>
-            </div>
-            <ul className="space-y-3 mb-8 flex-1">
-              {PRO_FEATURES.map((f) => (
-                <li key={f} className="flex items-start gap-2 text-sm text-gray-300">
-                  <svg className="w-4 h-4 text-cyan mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
-                  {f}
-                </li>
-              ))}
-            </ul>
-            <button
-              onClick={handleCheckout}
-              disabled={loading}
-              className="block w-full text-center py-3 rounded-xl bg-gradient-to-r from-indigo to-purple text-white font-semibold text-sm hover:opacity-90 transition-opacity disabled:opacity-50"
-            >
-              {loading ? "Redirecting..." : "Subscribe Now"}
-            </button>
-          </div>
+      <section className="max-w-5xl mx-auto px-6 pb-24">
+        <div className="grid md:grid-cols-3 gap-8">
+          {PLANS.map((plan) => (
+            <PricingCard key={plan.id} plan={plan} />
+          ))}
         </div>
 
         <div className="mt-16 text-center">
