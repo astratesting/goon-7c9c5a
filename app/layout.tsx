@@ -3,12 +3,13 @@ import "./globals.css";
 import Providers from "./providers";
 
 export const metadata: Metadata = {
-  title: "Goon — Custom 3D Printed Figurines, Shipped in 72 Hours",
+  title: "Goon — Custom 3D Printing for Makers",
   description:
-    "Goon turns your ideas into ultra-detailed, full-color 3D prints — no modeling skills needed. Describe what you want, and we handle the design, printing, and shipping.",
+    "Describe it, sketch it, print it. Goon is a custom 3D printing service built for hobbyist makers who want professional results without the hassle.",
+  keywords: ["3D printing", "custom printing", "maker", "hobbyist", "rapid prototyping"],
   openGraph: {
-    title: "Goon — Custom 3D Printed Figurines, Shipped in 72 Hours",
-    description: "Describe It. Print It. Ship It.",
+    title: "Goon — Custom 3D Printing for Makers",
+    description: "Describe it, sketch it, print it.",
     type: "website",
   },
 };
