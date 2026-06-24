@@ -28,8 +28,8 @@ export const PLANS: SubscriptionPlan[] = [
   {
     id: "pro",
     name: "Pro",
-    monthlyPrice: 2999,
-    monthlyLabel: "$29.99",
+    monthlyPrice: 2900,
+    monthlyLabel: "$29",
     printLimit: null,
     stripePriceId: process.env.NEXT_PUBLIC_STRIPE_PRO_PRICE_ID || "price_pro_placeholder",
     popular: true,

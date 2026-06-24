@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
 import Compass from "@/components/Compass";
+import PlanBadge from "@/components/PlanBadge";
 
 const navItems = [
   {
@@ -114,8 +115,7 @@ export default function Sidebar() {
           href="/upgrade"
           className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm bg-gradient-to-r from-indigo/10 to-purple/10 border border-indigo/20 hover:border-indigo/40 transition-colors"
         >
-          <span className="w-5 h-5 rounded bg-indigo/20 flex items-center justify-center text-[10px] font-mono text-indigo">F</span>
-          <span className="text-muted">Current Plan: <span className="text-white font-medium">Free</span></span>
+          <PlanBadge />
           <svg className="w-4 h-4 text-indigo ml-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>
